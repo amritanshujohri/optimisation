@@ -9,6 +9,7 @@ public abstract class ToteSack  {
 	final int LENGTH;
 	final int BREADTH;
 	final int HEIGHT;
+	final int D1, D2, D3;
 	final long V;
 	final Product[] ITEMS;
 	
@@ -28,6 +29,9 @@ public abstract class ToteSack  {
 		this.LENGTH = l;
 		this.BREADTH = b;
 		this.HEIGHT = h;
+		D1 = Math.min(Math.min(l,b), h);
+		D3 = Math.max(Math.max(l,b), h);
+		D2 = l + b + h - D1 - D3;
 		this.V = l*b*h;
 		ArrayList<Product> lItems = new ArrayList<>();
 		for(int i = 0; i < items.length; i++) {
@@ -35,15 +39,17 @@ public abstract class ToteSack  {
 			if(x.price == 0) {
 				continue;
 			}
-			if((x.height > this.HEIGHT) || (x.length > this.LENGTH) || (x.width > this.BREADTH)) {
-				continue;
-			}
 			long v = x.height*x.length*x.width;
 			if(v > this.V) {
 				continue;
 			}
+			if(!willItFit(x.height, x.width, x.length)) {
+				continue;
+			}
 			lItems.add(x);	
 		}
+		// Total items to look into 16235 Actual count 20000
+
 		System.out.println("Total items to look into " + lItems.size() + " Actual count " + items.length);
 		this.ITEMS = new Product[lItems.size()];
 		
@@ -69,7 +75,15 @@ public abstract class ToteSack  {
 			suffixMinVolume[i] = minValue;
 		}		
 	}
+	private boolean willItFit(int l, int b, int h) {
+
+		int c1 = Math.min(Math.min(l,b), h);
+		int c3 = Math.max(Math.max(l,b), h);
+		int c2 = l + b + h - D1 - D3;
+		
+		return (c1 <= D1 && c2 <= D2 && c3 <= D3) || true;
 	
+	}
 	private void GetGreedyMaxValue() {
 		// TODO Auto-generated method stub
 		Product.ORDERED_BY = Product.Trait.PRICE_DENSITY;

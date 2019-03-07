@@ -35,7 +35,7 @@ public class SolverTote {
 			new ToteSackDP(45, 30, 35, items).Solve();
 		}
 		else {
-			System.out.println("Using branch and bound this may take a while!");
+			System.out.println("Using branch and bound this may take a while! \n You might to add more memory e.g. -xmx4G ");
 			new ToteSackBB(L, B, H, items).Solve();
 		}	
 		
