@@ -1,0 +1,5 @@
+Total items to look into 16235 Actual count 20000
+556 Found 2026 1980
+Greedy solution has value  14141 for element count 9 I 16235
+Email id to send 113915 0x1bcfb
+Ksack 14141 113915
