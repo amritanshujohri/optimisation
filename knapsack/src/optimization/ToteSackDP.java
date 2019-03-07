@@ -30,7 +30,7 @@ public class ToteSackDP extends ToteSack {
 					long weight = m_prev.weight + E.weight;
 					long productSum = m_prev.productIDSum + E.productID;
 					if(( priceTillNow > M[i][j-1].priceTillNow ) ||
-							(( priceTillNow + E.price == M[i][j-1].priceTillNow) && 
+							(( priceTillNow  == M[i][j-1].priceTillNow) && 
 									(m_prev.weight + E.weight <  M[i][j-1].weight))) {
 						M[i][j] = nodeQQ.Build(j-1, priceTillNow, i - volume, productSum, weight); 
 					}
@@ -48,19 +48,20 @@ public class ToteSackDP extends ToteSack {
 		nodeQQ soln =  M[(int)V-1][ITEMS.length];
 		System.out.println(" Price " + soln.priceTillNow + " ProductID " + soln.productIDSum);
 		int checkSum = 0, checkPrice = 0;
-		int count =0;
-
+		int count = 0;
+		long weightSack = 0;
 		while(soln != znode) {
 			int i = soln.i;
 			 checkSum += ITEMS[i].productID;
 			 checkPrice += ITEMS[i].price;
+			 weightSack += ITEMS[i].weight;
 			 System.out.println(count + " " + i + " ID " + ITEMS[i].productID 
 					 + " P " + ITEMS[i].price + " V " + ITEMS[i].volume  +  " PD " + ITEMS[i].priceDensity);
 			 
 			 soln = M[(int) soln.remainingVolume][soln.i];
 			 count++;
 		}
-		System.out.println(" + " + checkPrice + " " + checkSum);
+		System.out.println(" + " + checkPrice + " " + checkSum + " " + weightSack );
 		Utils.showMetrics();
 	}  
 }
